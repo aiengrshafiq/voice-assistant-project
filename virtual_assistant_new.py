@@ -55,7 +55,7 @@ def recognize_speech():
         audio = recognizer.listen(source)
     try:
         result = recognizer.recognize_google(audio)
-        print(f" you said {result}")
+        print(f" You said: {result}")
         return result
     except Exception:
         return ""
@@ -97,6 +97,7 @@ def get_gpt_intent(command):
 def confirm_action(command):
     speak(f"You asked: '{command}'. Do you want me to proceed?")
     response = recognize_speech().lower()
+    print(f" confirm action is {response}")
     return "yes" in response or "sure" in response or "go ahead" in response
 
 # Actions
@@ -141,6 +142,20 @@ def handle_command(command):
         response = general_gpt_response(command)
         speak(response)
 
+# Assistant interaction loop
+def assistant_loop():
+    while True:
+        speak("Anything else I can help you with?")
+        response = recognize_speech().lower()
+        if "no" in response or "exit" in response or "stop" in response:
+            speak("Okay, going to sleep. Call me anytime.")
+            break
+        elif response:
+            if confirm_action(response):
+                handle_command(response)
+            else:
+                speak("Action cancelled.")
+
 # Main loop
 def main_loop():
     speak("Assistant ready. Please say 'Hey Jarvis' to wake me.")
@@ -148,12 +163,7 @@ def main_loop():
         wake_word = recognize_speech().lower()
         if "hey jarvis" in wake_word:
             speak("Yes, how can I assist?")
-            command = recognize_speech().lower()
-            if command:
-                if confirm_action(command):
-                    handle_command(command)
-                else:
-                    speak("Action cancelled.")
+            assistant_loop()
 
 if __name__ == "__main__":
     main_loop()

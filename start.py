@@ -3,10 +3,15 @@ from pvporcupine import create
 import pyaudio
 import struct
 from main import run_voice_assistant
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def listen_for_wake_word():
-    porcupine = create(keywords=["jarvis"])
+    access_key = os.getenv("PORCUPINE_ACCESS_KEY")
+    porcupine = create(access_key=access_key, keywords=["jarvis"])
     pa = pyaudio.PyAudio()
     stream = pa.open(
         rate=porcupine.sample_rate,

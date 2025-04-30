@@ -1,10 +1,13 @@
 # File: services/intent_recognizer.py
 import os
-import openai
+#import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 def detect_intent(user_input):
     prompt = f"""
@@ -21,13 +24,14 @@ Return a JSON with this format:
 Valid intents: turn_on_light, turn_off_light, set_thermostat, turn_on_plug, turn_off_plug, set_reminder
 """
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}
             ]
         )
+        
         result = response.choices[0].message.content
         print("Intent recognition result:", result)
         import json

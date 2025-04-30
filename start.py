@@ -1,0 +1,41 @@
+# File: start.py
+from pvporcupine import create
+import pyaudio
+import struct
+from main import run_voice_assistant
+
+
+def listen_for_wake_word():
+    porcupine = create(keywords=["jarvis"])
+    pa = pyaudio.PyAudio()
+    stream = pa.open(
+        rate=porcupine.sample_rate,
+        channels=1,
+        format=pyaudio.paInt16,
+        input=True,
+        frames_per_buffer=porcupine.frame_length
+    )
+
+    print("Listening for wake word 'Jarvis'...")
+    try:
+        while True:
+            pcm = stream.read(porcupine.frame_length, exception_on_overflow=False)
+            pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
+            result = porcupine.process(pcm)
+
+            if result >= 0:
+                print("Wake word detected! Starting assistant...")
+                run_voice_assistant()
+                print("Listening for wake word 'Jarvis'...")
+
+    except KeyboardInterrupt:
+        print("Exiting wake word listener.")
+    finally:
+        stream.stop_stream()
+        stream.close()
+        pa.terminate()
+        porcupine.delete()
+
+
+if __name__ == "__main__":
+    listen_for_wake_word()

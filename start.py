@@ -18,6 +18,7 @@ def listen_for_wake_word():
         channels=1,
         format=pyaudio.paInt16,
         input=True,
+        input_device_index=2,
         frames_per_buffer=porcupine.frame_length
     )
 

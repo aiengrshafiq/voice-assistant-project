@@ -27,7 +27,9 @@ def execute_device_action(intent, parameters):
         elif intent == "set_reminder":
             message = parameters.get("message", "")
             time = parameters.get("time", "soon")
-            return f"Reminder set: '{message}' at {time}."
+            #return f"Reminder set: '{message}' at {time}."
+            from services.reminders import set_reminder_from_parameters
+            return set_reminder_from_parameters(parameters)
 
         else:
             return "Intent not yet supported."

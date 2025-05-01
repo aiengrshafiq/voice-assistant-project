@@ -1,0 +1,15 @@
+announcements:
+  - message: "Welcome to MetaTech. Our company was founded in 2010 with a mission to innovate."
+    schedule: "interval"
+    minutes: 60
+
+  - message: "Congratulations to Ahmed from Sales for achieving this month’s highest target!"
+    schedule: "cron"
+    hour: 10
+    minute: 0
+
+  - message: "Reminder: Weekly meeting is held every Monday at 9 AM in the conference room."
+    schedule: "cron"
+    day_of_week: "mon"
+    hour: 9
+    minute: 0

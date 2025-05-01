@@ -44,4 +44,6 @@ def listen_for_wake_word():
 
 
 if __name__ == "__main__":
+    from services.automated_announcements import start_automated_announcements
+    start_automated_announcements()
     listen_for_wake_word()

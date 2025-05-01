@@ -4,7 +4,7 @@ from openai.types.chat import ChatCompletionMessage
 from openai._exceptions import AuthenticationError, RateLimitError, OpenAIError
 
 # Replace with your actual API key
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY_TEST')
+OPENAI_API_KEY =os.getenv('OPENAI_API_KEY_TEST')
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 try:

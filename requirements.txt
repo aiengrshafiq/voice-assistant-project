@@ -6,4 +6,5 @@ pyaudio
 requests
 pvporcupine
 flac
-
+PyYAML
+apscheduler

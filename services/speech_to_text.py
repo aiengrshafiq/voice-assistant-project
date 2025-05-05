@@ -1,11 +1,21 @@
 # File: services/speech_to_text.py
+import os
 import speech_recognition as sr
+from dotenv import load_dotenv
+load_dotenv()
+
+device_index = int(os.getenv("MIC_DEVICE_INDEX", 2))  # Default to 2
 
 def listen_command():
     recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
+    mic = sr.Microphone(device_index=device_index)
+
+    with mic as source:
         print("Listening...")
+        recognizer.adjust_for_ambient_noise(source, duration=0.5)
+        #audio = recognizer.listen(source, timeout=3, phrase_time_limit=2)
         audio = recognizer.listen(source)
+
     try:
         text = recognizer.recognize_google(audio)
         print(f"Recognized: {text}")
@@ -16,3 +26,4 @@ def listen_command():
     except sr.RequestError as e:
         print(f"Could not request results; {e}")
         return None
+

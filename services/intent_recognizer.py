@@ -33,7 +33,7 @@ Valid intents: turn_on_light, turn_off_light, set_thermostat, turn_on_plug, turn
         )
         
         result = response.choices[0].message.content
-        print("Intent recognition result:", result)
+        #print("Intent recognition result:", result)
         import json
         parsed = json.loads(result)
         return parsed.get("intent"), parsed.get("parameters")

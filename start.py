@@ -1,5 +1,6 @@
 # File: start.py
-from pvporcupine import create
+#from pvporcupine import create
+import pvporcupine
 import pyaudio
 import struct
 from main import run_voice_assistant
@@ -8,18 +9,26 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+access_key = os.getenv("PORCUPINE_ACCESS_KEY")
+device_index = int(os.getenv("MIC_DEVICE_INDEX", 2))
+
 
 def listen_for_wake_word():
-    access_key = os.getenv("PORCUPINE_ACCESS_KEY")
-    porcupine = create(access_key=access_key, keywords=["jarvis"])
+    
+    #porcupine = create(access_key=access_key, keywords=["jarvis"])
+    porcupine = pvporcupine.create(
+        access_key=access_key,
+        keyword_paths=[os.path.join(os.path.dirname(__file__), "models/porcupine/jarvis_raspberry-pi.ppn")]
+    )
     pa = pyaudio.PyAudio()
+   
     stream = pa.open(
         rate=porcupine.sample_rate,
         channels=1,
         format=pyaudio.paInt16,
         input=True,
-        input_device_index=2,
-        frames_per_buffer=porcupine.frame_length
+        input_device_index=device_index,
+        frames_per_buffer=porcupine.frame_length,
     )
 
     print("Listening for wake word 'Jarvis'...")
@@ -44,6 +53,6 @@ def listen_for_wake_word():
 
 
 if __name__ == "__main__":
-    from services.automated_announcements import start_automated_announcements
-    start_automated_announcements()
+    # from services.automated_announcements import start_automated_announcements
+    # start_automated_announcements()
     listen_for_wake_word()

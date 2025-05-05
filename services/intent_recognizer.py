@@ -13,7 +13,8 @@ VALID_INTENTS = {
     "turn_on_light", "turn_off_light",
     "set_thermostat",
     "turn_on_plug", "turn_off_plug",
-    "set_reminder"
+    "set_reminder","turn_off_speaker",
+    "turn_on_speaker"
 }
 
 def detect_intent(user_input):

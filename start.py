@@ -21,7 +21,7 @@ def listen_for_wake_word():
         keyword_paths=[os.path.join(os.path.dirname(__file__), "models/porcupine/jarvis_raspberry-pi.ppn")]
     )
     pa = pyaudio.PyAudio()
-    print(f"device_index: {device_index}")
+    #print(f"device_index: {device_index}")
     stream = pa.open(
         rate=porcupine.sample_rate,
         channels=1,

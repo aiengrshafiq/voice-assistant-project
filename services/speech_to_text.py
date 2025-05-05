@@ -12,9 +12,12 @@ def listen_command():
 
     with mic as source:
         print("Listening...")
-        recognizer.adjust_for_ambient_noise(source, duration=0.5)
-        #audio = recognizer.listen(source, timeout=3, phrase_time_limit=2)
-        audio = recognizer.listen(source)
+        recognizer.adjust_for_ambient_noise(source, duration=0.3)
+        try:
+            audio = recognizer.listen(source, timeout=3, phrase_time_limit=2)
+        except sr.WaitTimeoutError:
+            print("Listening timed out while waiting for phrase to start")
+            return None
 
     try:
         text = recognizer.recognize_google(audio)
@@ -26,4 +29,3 @@ def listen_command():
     except sr.RequestError as e:
         print(f"Could not request results; {e}")
         return None
-

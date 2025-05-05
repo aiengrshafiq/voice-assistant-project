@@ -8,3 +8,5 @@ pvporcupine
 flac
 PyYAML
 apscheduler
+vosk
+sounddevice

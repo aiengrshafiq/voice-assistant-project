@@ -18,7 +18,9 @@ def run_voice_assistant():
             speak(f"You said: {command}")
             intent, parameters = detect_intent(command)
 
-            if intent:
+            if intent == "unsupported":
+                speak("I'm your smart home assistant. I can help with lights, plugs, thermostat, or reminders.")
+            elif intent:
                 speak(f"I understood you want to: {intent}. Shall I proceed?")
                 if confirm_action():
                     result = execute_device_action(intent, parameters)

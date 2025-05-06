@@ -14,8 +14,8 @@ def execute_device_action(intent, parameters):
             return f"Turning off the light in {room}."
 
         elif intent == "set_thermostat":
-            temp = parameters.get("temperature")
-            return f"Setting thermostat to {temp} degrees."
+            response = handle_intent(intent, parameters)
+            return response
 
         elif intent == "turn_on_plug":
             device = parameters.get("device", "plug")
@@ -26,16 +26,12 @@ def execute_device_action(intent, parameters):
             return f"Turning off {device}."
         
         elif intent == "turn_on_speaker":
-            # device = parameters.get("device", "speaker")
-            # return f"Turning on {device}."
             parameters = {"device": "speaker"}
             intent = "turn_on_speaker"
             response = handle_intent(intent, parameters)
             return response
 
         elif intent == "turn_off_speaker":
-            # device = parameters.get("device", "speaker")
-            # return f"Turning off {device}."
             parameters = {"device": "speaker"}
             intent = "turn_off_speaker"
             response = handle_intent(intent, parameters)
